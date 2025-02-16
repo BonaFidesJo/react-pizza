@@ -1,0 +1,130 @@
+[
+	{
+		"id": 0,
+		"image": "img/card/05.png",
+		"title": "Пепперони",
+		"types": [
+			0,
+			1
+		],
+		"sizes": [
+			26,
+			30,
+			40
+		],
+		"price": 569,
+		"category": 0,
+		"rating": 5
+	},
+	{
+		"id": 1,
+		"image": "img/card/02.png",
+		"title": "Сырная",
+		"types": [
+			0
+		],
+		"sizes": [
+			30,
+			40
+		],
+		"price": 359,
+		"category": 6,
+		"rating": 4.7
+	},
+	{
+		"id": 2,
+		"image": "img/card/03.png",
+		"title": "Грибная",
+		"types": [
+			1
+		],
+		"sizes": [
+			26,
+			40
+		],
+		"price": 459,
+		"category": 6,
+		"rating": 4.5
+	},
+	{
+		"id": 3,
+		"image": "img/card/04.png",
+		"title": "Маргарита",
+		"types": [
+			0,
+			1
+		],
+		"sizes": [
+			26,
+			30,
+			40
+		],
+		"price": 669,
+		"category": 3,
+		"rating": 5
+	},
+	{
+		"id": 4,
+		"image": "img/card/06.png",
+		"title": "Грибы и курица",
+		"types": [
+			0,
+			1
+		],
+		"sizes": [
+			26,
+			30,
+			40
+		],
+		"price": 669,
+		"category": 1,
+		"rating": 2
+	},
+	{
+		"id": 5,
+		"image": "img/card/07.png",
+		"title": "Сезонная",
+		"types": [
+			1
+		],
+		"sizes": [
+			26,
+			30
+		],
+		"price": 459,
+		"category": 2,
+		"rating": 3
+	},
+	{
+		"id": 6,
+		"image": "img/card/08.png",
+		"title": "Ветчина и сыр",
+		"types": [
+			0,
+			1
+		],
+		"sizes": [
+			26,
+			30
+		],
+		"price": 459,
+		"category": 4,
+		"rating": 3
+	},
+	{
+		"id": 7,
+		"image": "img/card/01.png",
+		"title": "Мексиканская",
+		"types": [
+			0
+		],
+		"sizes": [
+			26,
+			30,
+			40
+		],
+		"price": 679,
+		"category": 1,
+		"rating": 4.8
+	}
+]

@@ -1,0 +1,141 @@
+.card {
+	width: toRem(260);
+	max-width: 100%;
+	@include adaptiveValue("margin-bottom", 60, 15);
+	z-index: 1;
+
+	&__image {
+		
+		margin-bottom: toRem(12);
+		width: toRem(260);
+		height: toRem(260);
+		margin-bottom: toRem(30);
+		img{
+			width: 100%;
+		}
+	}
+
+	&__name {
+		font-weight: 800;
+		@include adaptiveValue("font-size", 20, 18);
+		letter-spacing: 0.01em;
+		text-align: center;
+	}
+
+	&__choice {
+		@include adaptiveValue("margin-top", 24,18);
+		background: #f3f3f3;
+	}
+
+	&__bottom {
+		@include adaptiveValue("margin-top", 24,18);
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	&__price {
+		font-weight: 700;
+		@include adaptiveValue("font-size", 22, 20);
+		letter-spacing: 0.01em;
+		
+	}
+
+	&__button {
+	}
+}
+
+
+.button-card {
+	line-height: 2;
+	transition: all 0.3s;
+	border: toRem(1) solid #eb5a1e;
+	border-radius: toRem(30);
+	height: toRem(40);
+	// width: 155px;
+	// height: toRem(40);
+
+	align-items: center;
+	justify-content: space-around;
+	padding: toRem(8)toRem(10);
+	gap: toRem(10);
+
+	display: flex;
+	flex-direction: row;
+	
+	@media(any-hover:hover){
+	&:hover{
+		background-color:#eb5a1e;
+		
+		&:hover .button-card__text{
+			color: white;
+		}
+		&:hover .button-card__count{
+			background-color:white;
+			color: #eb5a1e;
+		}
+		svg{path{fill:white;}}
+	}
+	}
+
+	&__image {
+	}
+
+	&__text {
+		font-weight: 700;
+		font-size: toRem(16);
+		color: #eb5a1e;
+		}
+
+	&__count {
+
+		display: inline-flex;
+
+		font-weight: 700;
+		font-size: toRem(13);
+		color: #fff;
+		background-color:#eb5a1e;
+		border-radius: 100%;
+		width: toRem(22);
+		height: toRem(22);
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		span{
+
+		}
+	}
+}
+
+
+.choice-bottom {
+	user-select: none;
+	
+	display: flex;
+	flex-direction:  column;
+	gap: toRem(5);
+	padding: toRem(5);
+	border-radius: toRem(10);
+
+	&__list {
+		display: flex;
+		flex-direction:  row;
+		gap: toRem(5);
+		justify-content: space-around;	
+	}
+	&__item {
+		cursor: pointer;
+		align-content: center;
+		height: toRem(32);
+		width: 100%;
+		line-height: 2.5;
+		// justify-items: center
+		text-align: center;
+		&._active{
+			box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.04);
+			background: #fff;
+			border-radius: toRem(5);
+		}
+	}
+}

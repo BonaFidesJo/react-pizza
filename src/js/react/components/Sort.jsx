@@ -2,19 +2,54 @@ import React from "react";
 
 
 const Sort = () => {
+
+	const [openPopup, setOpenPopup] = React.useState(false);
+
+	const [activeSort, setActiveSort] = React.useState(0);
+
+	const onClickListItem = (i) => {
+		setActiveSort(i);
+		setOpenPopup(false);
+
+	}
+	const list = [
+		'популярности',
+		'цене',
+		'алфавиту'
+	]
+	const sortName = list[activeSort];
+
+
+
+
+
 	return (
 		<div className="nav-content__sort sort">
-			<div className="sort__label">
+			<div onClick={() => setOpenPopup(!openPopup)} className="sort__label">
 				<p> <img src="@img/sort.svg" alt="Image" /> Сортировка по:</p>
-				<span>популярности</span>
+				<span>{sortName}</span>
 			</div>
-			<div className="sort__popup">
-				<ul className="sort__list">
-					<li className="sort__item sort__item_active">популярности</li>
-					<li className="sort__item">цене</li>
-					<li className="sort__item">алфавиту</li>
-				</ul>
-			</div>
+			{
+
+				openPopup && (
+					<div className="sort__popup">
+						<ul className="sort__list">
+
+
+							{list.map((name, i) =>
+								<li
+									key={i}
+									onClick={() => onClickListItem(i)}
+									className={activeSort === i ? "sort__item _active" : "sort__item"}>
+									{name}
+								</li>)
+							}
+						</ul>
+					</div>
+				)
+			}
+
+
 		</div>
 	)
 }

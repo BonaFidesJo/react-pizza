@@ -25,7 +25,8 @@ const Categories = () => {
 			<ul className="category__body">
 				{
 					categories.map((value, index) =>
-						<li key={value}
+						<li 
+							key={index}
 							onClick={() => onCLickCategory(index)}
 							className={activeIndex === index ? "category__item _active" : "category__item"}>
 							<span>{value}</span>

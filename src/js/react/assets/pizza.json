@@ -36,7 +36,7 @@
 		"image": "img/card/03.png",
 		"title": "Грибная",
 		"types": [
-			1
+			0,1
 		],
 		"sizes": [
 			26,
@@ -85,13 +85,13 @@
 		"image": "img/card/07.png",
 		"title": "Сезонная",
 		"types": [
-			1
+			0
 		],
 		"sizes": [
 			26,
 			30
 		],
-		"price": 459,
+		"price": 599,
 		"category": 2,
 		"rating": 3
 	},
@@ -107,7 +107,7 @@
 			26,
 			30
 		],
-		"price": 459,
+		"price": 479,
 		"category": 4,
 		"rating": 3
 	},

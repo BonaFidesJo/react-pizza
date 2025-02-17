@@ -34,15 +34,17 @@ const Card = ({ title, price, image, sizes, types }) => {
 						<li key={typeId}
 							onClick={() => setActiveType(typeId)} className={activeType === typeId ? "choice-bottom__item _active" : "choice-bottom__item"}>
 							{typeNames[typeId]}
-
 						</li>)
 					}
 
 
 				</ul>
+
+
 				<ul className="choice-bottom__list">
 					{sizes.map((size, i) =>
-						<li key={size}
+						<li
+							key={size}
 							onClick={() => setActiveSize(i)}
 							className={activeSize === i ? "choice-bottom__item _active" : "choice-bottom__item"}>
 							{size} см.

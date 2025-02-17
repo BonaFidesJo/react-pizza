@@ -1,25 +1,26 @@
 .cart {
 
-	width: toRem(820);
+	@include adaptiveValue("width", 820, 250);
+	justify-self: center;
 	
 
 	&__top {
-		display: flex;
-		justify-content: space-between;
-		@include adaptiveValue("margin-bottom", 30, 20);
+	
 		
 	}
 
 	&__body {
-	
-		
-	
-	}
+		}
 
 	&__bottom {
 	}
+	&__buttons {
+	}
 }
 .top-cart {
+	display: flex;
+		justify-content: space-between;
+		@include adaptiveValue("margin-bottom", 30, 20);
 
 
 	&__title {
@@ -34,16 +35,22 @@
 			width: toRem(30);
 			height: toRem(30);
 		}
+		span{
+			@media (max-width:$mobileSmall){
+				display: none;  
+			}
+		}
 	}
 
 	&__clean {
-		font-size: 16px;
+		font-size: toRem(16);
 		color: #b6b6b6;
 		display: flex;
 		gap: toRem(18);
 		justify-content: center;
 		white-space: nowrap;
 		align-items: center;
+	
 		img{
 			width: toRem(20);
 			height: toRem(20);
@@ -66,20 +73,37 @@
 	display: flex;
 	justify-content: space-between;
 	gap: toRem(20);
+	// @media (max-width:$tablet){
+	// 	flex-direction: column;
+	// }
 
 
 	&__info {
 		display: flex;
 		justify-self: flex-start;
 		align-items: center;
-		gap: toRem(25);
+		@include adaptiveValue("gap", 25, 10);
+		@media (max-width:$tablet){
+			flex-direction: column;
+			flex-wrap: wrap;
+		}
+		
+	
 
 	}
 
 	&__description{
 		display: flex;
-		justify-content: space-between;
-		gap: toRem(80);
+		// justify-content: space-between;
+		@include adaptiveValue("gap", 80, 15);
+		@media (max-width:$mobile){
+			 flex-direction: column; 
+			 align-items: end;
+			justify-content: center;
+			
+		}
+
+		
 	}
 
 	&__image {
@@ -91,57 +115,115 @@
 	}
 
 	&__text {
-		white-space: nowrap;
+		// white-space: nowrap;
 	}
 
 	&__title {
 		font-weight: 700;
 		@include adaptiveValue("font-size", 22, 18);
 		letter-spacing: 0.01em;
+		line-height: 1;
 	}
 
 	&__desc {
 		@include adaptiveValue("font-size", 18, 16);
 		letter-spacing: 0.01em;
+		line-height: 1.2;
 		color: #8d8d8d;
 	}
 
 	&__count {
 		display: flex;
 		align-items: center;
-		justify-content: center;
-		text-align: center;
-		gap: toRem(20);
+		// justify-content: center;
+		// text-align: center;
+		@include adaptiveValue("gap", 20, 10);
 		svg{
-			width: toRem(32);
-			height: toRem(32);
+			@include adaptiveValue("width", 32, 28);
 		}
 	
 	}
 
 	&__qty {
 		font-weight: 700;
-		font-size: 22px;
+		@include adaptiveValue("font-size", 22, 18);
 		letter-spacing: 0.01em;
 	}
 
 	&__price {
 		font-weight: 700;
-		font-size: 22px;
+		@include adaptiveValue("font-size", 22, 18);
 		letter-spacing: 0.01em;
 		align-self: center;
-		text-align: center;
+		// text-align: center;
 		white-space: nowrap;
+		@media (max-width:$mobile){
+			align-self: flex-end;
+		}
 	}
 
 	&__delete {
 	}
 }
 .bottom-cart {
-
+	display: flex;
+	justify-content: space-between;
+	@include adaptiveValue("font-size", 22, 18);
+	@include adaptiveValue("margin-bottom", 40, 20);
+	@media (max-width:$mobileSmall){
+		flex-direction: column;
+		align-items: end;
+		gap: toRem(10);
+	}
 	&__qty {
+		
+		b{
+
+		}
 	}
 
 	&__price {
+		b{
+			font-weight: 700;
+			color: #fe5f1e;
+		}
+	}
+}
+
+
+.buttons-cart {
+	display: flex;
+	justify-content: space-between;
+	@include adaptiveValue("margin-bottom", 40, 20);
+	@media (max-width:$mobileSmall){
+		 flex-direction: column-reverse; 
+		 gap: toRem(20);
+	}
+
+
+	&__back {
+		display: flex;
+		flex-direction: row;
+		gap: toRem(10);
+		font-size: toRem(16);
+		text-align: center;
+		color: #cacaca;
+		padding: toRem(16) toRem(18);
+		border: 1px solid #bebebe;
+		border-radius: toRem(30);
+		@media (max-width:$mobileSmall){
+			 width: toRem(200); 
+		}
+	}
+
+	&__pay {
+		background-color: #fe5f1e;
+		font-weight: 700;
+		font-size: 16px;
+		text-align: center;
+		color: #fff;
+		padding: toRem(16) toRem(18);
+		border-radius: toRem(30);
+		
 	}
 }

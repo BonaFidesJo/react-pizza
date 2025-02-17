@@ -1,0 +1,147 @@
+.cart {
+
+	width: toRem(820);
+	
+
+	&__top {
+		display: flex;
+		justify-content: space-between;
+		@include adaptiveValue("margin-bottom", 30, 20);
+		
+	}
+
+	&__body {
+	
+		
+	
+	}
+
+	&__bottom {
+	}
+}
+.top-cart {
+
+
+	&__title {
+		font-weight: 700;
+		@include adaptiveValue("font-size", 32, 24);
+		letter-spacing: 0.01em;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: toRem(18);
+		img{
+			width: toRem(30);
+			height: toRem(30);
+		}
+	}
+
+	&__clean {
+		font-size: 16px;
+		color: #b6b6b6;
+		display: flex;
+		gap: toRem(18);
+		justify-content: center;
+		white-space: nowrap;
+		align-items: center;
+		img{
+			width: toRem(20);
+			height: toRem(20);
+		}
+	}
+}
+.body-cart {
+
+	&__content {
+	}
+
+	&__item {
+		border-top:1px solid #bebebe ;
+		@include adaptiveValue("padding-top", 30, 20);
+		@include adaptiveValue("padding-bottom", 30, 20);
+		
+	}
+}
+.item-cart {
+	display: flex;
+	justify-content: space-between;
+	gap: toRem(20);
+
+
+	&__info {
+		display: flex;
+		justify-self: flex-start;
+		align-items: center;
+		gap: toRem(25);
+
+	}
+
+	&__description{
+		display: flex;
+		justify-content: space-between;
+		gap: toRem(80);
+	}
+
+	&__image {
+		width: 100%;
+		img{
+			width: toRem(80);
+			height: toRem(80);
+		}
+	}
+
+	&__text {
+		white-space: nowrap;
+	}
+
+	&__title {
+		font-weight: 700;
+		@include adaptiveValue("font-size", 22, 18);
+		letter-spacing: 0.01em;
+	}
+
+	&__desc {
+		@include adaptiveValue("font-size", 18, 16);
+		letter-spacing: 0.01em;
+		color: #8d8d8d;
+	}
+
+	&__count {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		gap: toRem(20);
+		svg{
+			width: toRem(32);
+			height: toRem(32);
+		}
+	
+	}
+
+	&__qty {
+		font-weight: 700;
+		font-size: 22px;
+		letter-spacing: 0.01em;
+	}
+
+	&__price {
+		font-weight: 700;
+		font-size: 22px;
+		letter-spacing: 0.01em;
+		align-self: center;
+		text-align: center;
+		white-space: nowrap;
+	}
+
+	&__delete {
+	}
+}
+.bottom-cart {
+
+	&__qty {
+	}
+
+	&__price {
+	}
+}

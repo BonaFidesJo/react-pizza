@@ -6,7 +6,11 @@
 		justify-content: space-between;
 		@include adaptiveValue("margin-bottom", 32, 20);
 		align-items: center;
-
+		@media (max-width:$tablet){
+			flex-direction: column;
+			justify-content: center;
+			gap: toRem(20);
+		}
 	}
 
 	&__body {
@@ -22,32 +26,44 @@
 	&__card {
 		@include adaptiveValue("margin-top",35 ,20 );
 		display: grid;
-		grid-template-columns: repeat(4,1fr);
-		// justify-content: center;
-		@include adaptiveValue("column-gap", 30, 15);
-		@media (max-width: toRem(1340)){
-			grid-template-columns: repeat(3,1fr);
-			justify-self: center;
-			justify-content: center;
+		grid-template-columns: repeat(auto-fit, minmax(toRem(250), 1fr));
+		justify-content: center;
+		
+		@include adaptiveValue("gap", 30, 15);
+		// @media (max-width: toRem(1340)){
+		// 	grid-template-columns: repeat(3,1fr);
+		// 	justify-self: center;
+		// 	justify-content: center;
 			
-		}
-		@media (max-width:$tablet){
-			grid-template-columns: repeat(2,1fr);
-		}
-		@media (max-width:$mobile){
-			grid-template-columns: repeat(1,1fr);
-		}
+		// }
+		// @media (max-width:$tablet){
+		// 	grid-template-columns: repeat(2,1fr);
+		// }
+		// @media (max-width:$mobile){
+		// 	grid-template-columns: repeat(1,1fr);
+		// }
 	}
 }
 
 .category {
 	cursor: pointer;
-	width: toRem(800);
-	// @include adaptiveValue("margin-right", 100, 5);
+	max-width: 100%;
 	&__body {
-		display: grid;
-		gap: toRem(10);
-		grid-template-columns: repeat(auto-fill, minmax(toRem(120), 1fr));
+		display: flex;
+		gap: toRem(20);
+		// display: grid;
+		// gap: toRem(10);
+		// grid-template-columns: repeat(auto-fill, minmax(toRem(120), 1fr));
+		@media (max-width:$tablet){
+			max-width: 100%;
+			 display:inline-flex; 
+			 overflow: scroll;
+			flex-wrap: nowrap;
+			white-space: nowrap;
+		}
+		@media (max-width:$mobile){
+			  gap: toRem(10);
+		}
 	}
 
 	&__item {
@@ -62,11 +78,11 @@
 	span{
 		display: inline;
 		font-weight: 700;
-		@include adaptiveValue("font-size", 16, 12);
+		font-size: toRem(16);
 		letter-spacing: 0.01em;
 		text-align: center;
 		color: #2c2c2c;
-		line-height: 2.5;
+		padding: toRem(10) toRem(15);
 		
 	}
 	&._active{
@@ -99,14 +115,14 @@
 			display: flex;
 			gap: toRem(5);
 			font-weight: 700;
-			@include adaptiveValue("font-size", 14, 12);
+			font-size: toRem(14);
 			letter-spacing: 0.01em;
 			color: #2c2c2c;
 			white-space: nowrap;
 			align-items: center;
 		}
 		span{
-			@include adaptiveValue("font-size", 14, 12);
+			font-size: toRem(14);
 			letter-spacing: 0.01em;
 			color: #fe5f1e;
 			border-bottom: toRem(1) dashed #fe5f1e;

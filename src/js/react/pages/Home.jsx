@@ -40,25 +40,26 @@ const Home = () => {
 			<div className="content__body">
 				<div className="content__title">Все пиццы</div>
 				{/* <NotFound></NotFound> */}
-				<div className="content__card card">
+				<div className="content__card">
+		
 
-					{
-						isLoading
-							? ([...new Array(8)].map((_, index) => <Skeleton key={index} />))
-							: items.map((obj) =>
-							(
-								<Card key={obj.id}
-									{...obj}
-									// title={obj.title}
-									// price={obj.price}
-									// image={obj.image}
-									// sizes={obj.sizes}
-									// types={obj.types}
-									{...obj}
-								/>)
-							)
-					}
-
+							{
+								isLoading
+									? ([...new Array(8)].map((_, index) => <Skeleton key={index} />))
+									: items.map((obj) =>
+									(
+										<Card key={obj.id}
+											{...obj}
+											// title={obj.title}
+											// price={obj.price}
+											// image={obj.image}
+											// sizes={obj.sizes}
+											// types={obj.types}
+											{...obj}
+										/>)
+									)
+							}
+					
 				</div>
 			</div>
 		</>

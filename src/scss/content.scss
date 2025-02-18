@@ -130,13 +130,13 @@
 	}
 
 	&__popup {
-		@include adaptiveValue("width", 136, 130);
+		@include adaptiveValue("width", 160, 130);
 		border-radius: toRem(10);
 		box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.09);
 		position: absolute;
 		background-color: #fff;
 		right: 0;
-		width: toRem(136);
+		
 		@include adaptiveValue("margin-top", 30, 10);
 		z-index: 3;
 		// height: toRem(132);

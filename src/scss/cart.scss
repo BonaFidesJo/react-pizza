@@ -55,6 +55,11 @@
 			width: toRem(20);
 			height: toRem(20);
 		}
+		@media(any-hover:hover){
+		&:hover{
+			color: #706f6f;
+		}
+		}
 	}
 }
 .body-cart {
@@ -194,6 +199,7 @@
 .buttons-cart {
 	display: flex;
 	justify-content: space-between;
+	transition: all 0.2s;
 	@include adaptiveValue("margin-bottom", 40, 20);
 	@media (max-width:$mobileSmall){
 		 flex-direction: column-reverse; 
@@ -211,8 +217,15 @@
 		padding: toRem(16) toRem(18);
 		border: 1px solid #bebebe;
 		border-radius: toRem(30);
+		transition: all 0.2s;
 		@media (max-width:$mobileSmall){
 			 width: toRem(200); 
+		}
+		@media(any-hover:hover){
+		&:hover{
+			color: #7d7c7c;
+			background-color: #ededed;
+		}
 		}
 	}
 
@@ -224,6 +237,12 @@
 		color: #fff;
 		padding: toRem(16) toRem(18);
 		border-radius: toRem(30);
+			transition: all 0.2s;
+		@media(any-hover:hover){
+		&:hover{
+			background-color: #ee4806;
+		}
+		}
 		
 	}
 }

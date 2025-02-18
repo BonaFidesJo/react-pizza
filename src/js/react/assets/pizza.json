@@ -13,7 +13,10 @@
 			40
 		],
 		"price": 569,
-		"category": 0,
+		"category": [
+			0,
+			1
+		],
 		"rating": 5
 	},
 	{
@@ -28,22 +31,29 @@
 			40
 		],
 		"price": 359,
-		"category": 6,
+		"category": [
+			0,
+			5
+		],
 		"rating": 4.7
 	},
 	{
 		"id": 2,
 		"image": "img/card/03.png",
-		"title": "Грибная",
+		"title": "Чили перец",
 		"types": [
-			0,1
+			0,
+			1
 		],
 		"sizes": [
 			26,
 			40
 		],
 		"price": 459,
-		"category": 6,
+		"category": [
+			0,
+			3
+		],
 		"rating": 4.5
 	},
 	{
@@ -60,7 +70,10 @@
 			40
 		],
 		"price": 669,
-		"category": 3,
+		"category": [
+			0,
+			4
+		],
 		"rating": 5
 	},
 	{
@@ -77,7 +90,10 @@
 			40
 		],
 		"price": 669,
-		"category": 1,
+		"category": [
+			0,
+			1
+		],
 		"rating": 2
 	},
 	{
@@ -92,7 +108,10 @@
 			30
 		],
 		"price": 599,
-		"category": 2,
+		"category": [
+			0,
+			2
+		],
 		"rating": 3
 	},
 	{
@@ -108,7 +127,10 @@
 			30
 		],
 		"price": 479,
-		"category": 4,
+		"category": [
+			0,
+			4
+		],
 		"rating": 3
 	},
 	{
@@ -124,7 +146,10 @@
 			40
 		],
 		"price": 679,
-		"category": 1,
+		"category": [
+			0,
+			3
+		],
 		"rating": 4.8
 	}
 ]

@@ -76,6 +76,12 @@
 	font-weight: 700;
 	@include adaptiveValue("font-size", 16, 14);
 	color: #fff;
+	transition: all 0.2s;
+	@media(any-hover:hover){
+		&:hover{
+			background-color: #ee4806;
+		}
+		}
 	
 	&__price{
 		border-right:toRem(1) solid #fff;

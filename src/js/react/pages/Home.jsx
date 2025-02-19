@@ -5,12 +5,12 @@ import Categories from "./../components/Categories.jsx";
 import Sort from "./../components/Sort.jsx";
 import Card from "./../components/Card.jsx"
 import Skeleton from "./../components/skeleton.jsx";
-import NotFound from "./NotFound.jsx";
+
 
 
 // import pizza from "./assets/pizza.json"
 
-const Home = () => {
+const Home = ({ searchValue }) => {
 
 	//Массим с пиццами
 	let [items, setItems] = React.useState([]);
@@ -30,10 +30,21 @@ const Home = () => {
 		const order = sortType.sortProperty.includes('-') ? 'asc' : 'desc'
 		const sortBy = sortType.sortProperty.replace('-', '')
 
+		// const order = sortType.sortProperty.includes('-') ? 'asc' : 'desc'
+		// const sortBy = sortType.sortProperty.replace('-', '');
+		// const search = searchValue ? `&search=${searchValue}` : '';
+
+		// fetch(
+		// 	`https://67b2e560bc0165def8cf0958.mockapi.io/items?${categoryId > 0
+		// 		? `category=${categoryId}`
+		// 		: ''}&sortBy=${sortBy}&order=${order}${search}`
+
+		// )
+
 		fetch(
-			`https://67b2e560bc0165def8cf0958.mockapi.io/items?${categoryId > 0 
-			? `category=${categoryId}` 
-			: ''}&sortBy=${sortBy}&order=${order}`)
+			`https://67b2e560bc0165def8cf0958.mockapi.io/items?${categoryId > 0
+				? `category=${categoryId}`
+				: ''}&sortBy=${sortBy}&order=${order}`)
 			.then((res) => {
 				return res.json();
 			})
@@ -42,7 +53,26 @@ const Home = () => {
 				setIsLoading(false);
 			});
 		window.scrollTo(0, 0);
-	}, [categoryId,sortType]);
+	}, [categoryId, sortType]);
+
+	const pizzas = items
+
+		.filter(obj => {
+			if (obj.title.toLowerCase().includes(searchValue.toLowerCase())) {
+				return true;
+			}
+
+			return false;
+		})
+
+		.map((obj) =>
+		(
+			<Card
+				key={obj.id}
+				{...obj}
+			/>))
+
+	const skeletons = [...new Array(8)].map((_, index) => <Skeleton key={index} />);
 
 
 	return (
@@ -53,11 +83,11 @@ const Home = () => {
 					onChangeCategory={(id) => setCategoryId(id)}
 
 				/>
-				<Sort 
-				value={sortType}
-				onChangeSort={(i) => setSortType(i)}
-				
-				
+				<Sort
+					value={sortType}
+					onChangeSort={(i) => setSortType(i)}
+
+
 				/>
 			</div>
 
@@ -69,19 +99,8 @@ const Home = () => {
 
 					{
 						isLoading
-							? ([...new Array(8)].map((_, index) => <Skeleton key={index} />))
-							: items.map((obj) =>
-							(
-								<Card key={obj.id}
-									{...obj}
-									// title={obj.title}
-									// price={obj.price}
-									// image={obj.image}
-									// sizes={obj.sizes}
-									// types={obj.types}
-									{...obj}
-								/>)
-							)
+							? skeletons
+							: pizzas
 					}
 
 				</div>

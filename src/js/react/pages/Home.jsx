@@ -1,23 +1,30 @@
 
 import React from "react";
 
+
 import Categories from "./../components/Categories.jsx";
 import Sort from "./../components/Sort.jsx";
 import Card from "./../components/Card.jsx"
 import Skeleton from "./../components/skeleton.jsx";
+import Pagination from "../components/Pagination.jsx";
+import { SearchContext } from "../Index.jsx";
 
 
 
 // import pizza from "./assets/pizza.json"
 
-const Home = ({ searchValue }) => {
+const Home = () => {
+		const { searchValue} = React.useContext(SearchContext)
 
 	//Массим с пиццами
 	let [items, setItems] = React.useState([]);
 
 	const [isLoading, setIsLoading] = React.useState(true);
 
+
 	const [categoryId, setCategoryId] = React.useState(0);
+	const [currentPage, setCurrentPage] = React.useState(1);
+
 	const [sortType, setSortType] = React.useState({
 		name: 'популярности',
 		sortProperty: 'rating'
@@ -30,21 +37,10 @@ const Home = ({ searchValue }) => {
 		const order = sortType.sortProperty.includes('-') ? 'asc' : 'desc'
 		const sortBy = sortType.sortProperty.replace('-', '')
 
-		// const order = sortType.sortProperty.includes('-') ? 'asc' : 'desc'
-		// const sortBy = sortType.sortProperty.replace('-', '');
-		// const search = searchValue ? `&search=${searchValue}` : '';
-
-		// fetch(
-		// 	`https://67b2e560bc0165def8cf0958.mockapi.io/items?${categoryId > 0
-		// 		? `category=${categoryId}`
-		// 		: ''}&sortBy=${sortBy}&order=${order}${search}`
-
-		// )
-
 		fetch(
-			`https://67b2e560bc0165def8cf0958.mockapi.io/items?${categoryId > 0
-				? `category=${categoryId}`
-				: ''}&sortBy=${sortBy}&order=${order}`)
+			`https://67b2e560bc0165def8cf0958.mockapi.io/items?page=${currentPage}&limit=8&
+			${categoryId > 0 ? `category=${categoryId}` : ''}
+			&sortBy=${sortBy}&order=${order}`)
 			.then((res) => {
 				return res.json();
 			})
@@ -53,7 +49,7 @@ const Home = ({ searchValue }) => {
 				setIsLoading(false);
 			});
 		window.scrollTo(0, 0);
-	}, [categoryId, sortType]);
+	}, [categoryId, sortType, currentPage]);
 
 	const pizzas = items
 
@@ -104,6 +100,9 @@ const Home = ({ searchValue }) => {
 					}
 
 				</div>
+				<Pagination
+					onChangePage={(number) => setCurrentPage(number)}
+				/>
 			</div>
 		</>
 	)

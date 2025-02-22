@@ -1,10 +1,14 @@
 
 import React from "react";
+import { SearchContext } from "../Index.jsx";
 
 
 
 
-const Search = ({ searchValue, setSearchValue }) => {
+const Search = () => {
+
+	const { searchValue, setSearchValue} = React.useContext(SearchContext)
+
 	return (
 
 

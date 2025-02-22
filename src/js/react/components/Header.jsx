@@ -5,7 +5,7 @@ import Search from "./Search.jsx";
 
 
 
-const Header = ({ searchValue, setSearchValue }) => {
+const Header = () => {
 	return (
 		<header className="header">
 			<div className="header__container">
@@ -31,10 +31,7 @@ const Header = ({ searchValue, setSearchValue }) => {
 						</div>
 					</Link>
 				</div>
-				<Search
-					searchValue={searchValue}
-					setSearchValue={setSearchValue}
-				></Search>
+				<Search />
 			</div>
 		</header>
 	)

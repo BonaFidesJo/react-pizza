@@ -25,6 +25,7 @@
 
 	&__card {
 		@include adaptiveValue("margin-top",35 ,20 );
+		@include adaptiveValue("margin-bottom", 35, 20);
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(toRem(250), 1fr));
 		justify-content: center;
@@ -239,5 +240,45 @@
 				z-index: 3;
 			}
 		}
+}
+
+.pagination{
+	@include adaptiveValue("margin-bottom", 40, 20);
+	@include adaptiveValue("font-size", 26, 16);
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	@include adaptiveValue("gap", 50, 20);
+
+	
+	
+
+		li{
+			a{
+				border: toRem(1) solid #fe5f1e;
+				color: #fe5f1e;
+				@include adaptiveValue("width", 50, 20);
+				@include adaptiveValue("height",50 ,20 );
+				align-content: center;
+				border-radius: 50%;
+				
+				&:hover{
+					background-color: #fe5f1e;
+					color: #fff;
+					}
+					}
+			}
+			.selected{
+				a{
+					background-color: #fe5f1e;
+					color: #fff;
+				}
+			}
+		
+				
+	
+	
 }
 

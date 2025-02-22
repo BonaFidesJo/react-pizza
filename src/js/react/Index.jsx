@@ -9,6 +9,8 @@ import Cart from "./pages/Cart.jsx";
 
 import NotFound from "./pages/NotFound.jsx";
 
+export const SearchContext = React.createContext();
+
 
 function App() {
 
@@ -18,23 +20,20 @@ function App() {
 	return (
 
 		<main className="page">
-			<Header 
-				searchValue={searchValue}
-				setSearchValue={setSearchValue}
-			></Header>
-			<div className="content">
-				<div className="content__container">
+			<SearchContext.Provider value ={{ searchValue, setSearchValue }}>
+				<Header />
+				<div className="content">
+					<div className="content__container">
 
-					<Routes>
-						<Route path="/" element={<Home
-							searchValue={searchValue}
-						/>} exact />
-						<Route path="/cart" element={<Cart />} />
-						<Route path="*" element={<NotFound />} />
-					</ Routes >
+						<Routes>
+							<Route path="/" element={<Home />} exact />
+							<Route path="/cart" element={<Cart />} />
+							<Route path="*" element={<NotFound />} />
+						</ Routes >
 
+					</div>
 				</div>
-			</div>
+			</SearchContext.Provider>
 		</main>
 
 

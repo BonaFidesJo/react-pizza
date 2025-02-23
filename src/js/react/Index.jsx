@@ -1,13 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+
+import { Provider } from 'react-redux';
 
 import Header from "./components/Header.jsx"
 import Home from "./pages/Home.jsx";
 import Cart from "./pages/Cart.jsx";
 
 import NotFound from "./pages/NotFound.jsx";
+
+import { store } from "./redux/store.js";
 
 export const SearchContext = React.createContext();
 
@@ -16,11 +20,12 @@ function App() {
 
 	const [searchValue, setSearchValue] = React.useState('');
 
-
 	return (
 
 		<main className="page">
-			<SearchContext.Provider value ={{ searchValue, setSearchValue }}>
+
+
+			<SearchContext.Provider value={{ searchValue, setSearchValue }}>
 				<Header />
 				<div className="content">
 					<div className="content__container">
@@ -49,7 +54,9 @@ const root = document.querySelector("#root")
 ReactDOM.createRoot(root).render(
 	<React.StrictMode>
 		<Router>
-			<App />
+			<Provider store={store}>
+				<App />
+			</Provider>
 		</Router>
 	</React.StrictMode>
 );

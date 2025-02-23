@@ -89,12 +89,15 @@
 		"webpack-stream": "latest"
 	},
 	"dependencies": {
+		"@redux-devtools/extension": "^3.3.0",
+		"@reduxjs/toolkit": "^2.5.1",
 		"gulp-cheerio": "^1.0.0",
 		"isotope-layout": "^3.0.6",
 		"react": "^18.2.0",
 		"react-content-loader": "^7.0.2",
 		"react-dom": "^18.2.0",
 		"react-paginate": "^8.3.0",
+		"react-redux": "^9.2.0",
 		"react-router-dom": "^6.29.0",
 		"simplebar": "latest"
 	}

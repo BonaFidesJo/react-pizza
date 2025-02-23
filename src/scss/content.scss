@@ -1,6 +1,6 @@
 .content {
 
-	@include adaptiveValue("margin-top", 50, 20);
+	@include adaptiveValue("margin-top", 35, 20);
 	&__nav {
 		display: flex;
 		justify-content: space-between;

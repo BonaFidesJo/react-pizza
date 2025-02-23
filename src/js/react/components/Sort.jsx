@@ -1,34 +1,36 @@
 import React from "react";
+import { useSelector, useDispatch } from 'react-redux'
+import {setSort} from './../redux/slices/filterSlice.js'
 
 
-const Sort = ({ value, onChangeSort }) => {
+const list = [
+	{ name: 'популярности ↓', sortProperty: 'rating' },
+	{ name: 'популярности ↑', sortProperty: '-rating' },
+	{ name: 'цене ↓', sortProperty: 'price' },
+	{ name: 'цене ↑ ', sortProperty: '-price' },
+	{ name: 'алфавиту ↓', sortProperty: 'title' },
+	{ name: 'алфавиту ↑', sortProperty: '-title' }
+]
+
+
+const Sort = () => {
+	const dispatch = useDispatch();
+	const sort = useSelector((state) => state.filter.sort)
 
 	const [openPopup, setOpenPopup] = React.useState(false);
 
-	const onClickListItem = (i) => {
-		onChangeSort(i);
+	const onClickListItem = (obj) => {
+		dispatch(setSort(obj));
 		setOpenPopup(false);
 
 	}
-	const list = [
-		{ name: 'популярности ↓', sortProperty: 'rating' },
-		{ name: 'популярности ↑', sortProperty: '-rating' },
-		{ name: 'цене ↓', sortProperty: 'price' },
-		{ name: 'цене ↑ ', sortProperty: '-price' },
-		{ name: 'алфавиту ↓', sortProperty: 'title' },
-		{ name: 'алфавиту ↑', sortProperty: '-title' }
-	]
-
-
-
-
 
 
 	return (
 		<div className="nav-content__sort sort">
 			<div onClick={() => setOpenPopup(!openPopup)} className="sort__label">
 				<p> <img src="@img/sort.svg" alt="Image" /> Сортировка по:</p>
-				<span>{value.name}</span>
+				<span>{sort.name}</span>
 			</div>
 			{
 
@@ -41,7 +43,7 @@ const Sort = ({ value, onChangeSort }) => {
 								<li
 									key={i}
 									onClick={() => onClickListItem(obj)}
-									className={value.sortProperty === obj.sortProperty ? "sort__item _active" : "sort__item"}>
+									className={sort.sortProperty === obj.sortProperty ? "sort__item _active" : "sort__item"}>
 									{obj.name}
 								</li>)
 							}

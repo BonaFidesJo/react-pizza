@@ -7,7 +7,7 @@ import { SearchContext } from "../Index.jsx";
 
 const Search = () => {
 
-	const { searchValue, setSearchValue} = React.useContext(SearchContext)
+	const { searchValue, setSearchValue } = React.useContext(SearchContext)
 
 	return (
 

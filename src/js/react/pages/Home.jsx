@@ -1,9 +1,10 @@
 
 import React from "react";
+import axios from "axios";
 
 
 import { useSelector, useDispatch } from 'react-redux'
-import { setCategoryId } from './../redux/slices/filterSlice.js'
+import { setCategoryId, setCurrentPage} from './../redux/slices/filterSlice.js'
 
 import Categories from "./../components/Categories.jsx";
 import Sort from "./../components/Sort.jsx";
@@ -11,6 +12,7 @@ import Card from "./../components/Card.jsx"
 import Skeleton from "./../components/skeleton.jsx";
 import Pagination from "../components/Pagination.jsx";
 import { SearchContext } from "../Index.jsx";
+
 
 
 
@@ -24,18 +26,17 @@ const Home = () => {
 
 	const categoryId = useSelector((state) => state.filter.categoryId)
 	const sortType = useSelector((state) => state.filter.sort.sortProperty)
+	const currentPage = useSelector((state) => state.filter.currentPage)
 	// их можно объединить в один
 	// const { categoryId, sort } = useSelector((state) => state.filter)
 	// const sortType = sort.sortProperty
 
 
-	console.log('redux state', categoryId)
 
 	const dispatch = useDispatch()
 
 
 	const onChangeCategory = (id) => {
-		console.log(id)
 		dispatch(setCategoryId(id));
 	}
 	// Но таким образом мы просто получаем id/А теперь нам надо его передать в редакс. Для ээтого используем useDispatch . то есть создать функциобю диспатч, дай нам действие как мегафон.
@@ -43,7 +44,9 @@ const Home = () => {
 
 	// Далее идем в слайс и импортируем оттуда наш метод, который что-то меняет. и передаем его в диспатч
 
-
+	const onChangePage = (number) => {
+		dispatch(setCurrentPage(number))
+	}
 
 
 
@@ -57,7 +60,8 @@ const Home = () => {
 	//Избавились от этого свойства, чтобы доставать его из редакс тулкита
 	// const [categoryId, setCategoryId] = React.useState(0);
 
-	const [currentPage, setCurrentPage] = React.useState(1);
+	// const [currentPage, setCurrentPage] = React.useState(1);
+
 
 	// const [sortType, setSortType] = React.useState({
 	// 	name: 'популярности',
@@ -71,17 +75,28 @@ const Home = () => {
 		const order = sortType.includes('-') ? 'asc' : 'desc'
 		const sortBy = sortType.replace('-', '')
 
-		fetch(
-			`https://67b2e560bc0165def8cf0958.mockapi.io/items?page=${currentPage}&limit=8&
+		// 	fetch(
+		// 		`https://67b2e560bc0165def8cf0958.mockapi.io/items?page=${currentPage}&limit=8&
+		// 		${categoryId > 0 ? `category=${categoryId}` : ''}
+		// 		&sortBy=${sortBy}&order=${order}`)
+		// 		.then((res) => {
+		// 			return res.json();
+		// 		})
+		// 		.then((arr) => {
+		// 			setItems(arr);
+		// 			setIsLoading(false);
+		// 		});
+		// 	window.scrollTo(0, 0);
+		// }, [categoryId, sortType, currentPage]);
+
+		axios.get(`https://67b2e560bc0165def8cf0958.mockapi.io/items?page=${currentPage}&limit=8&
 			${categoryId > 0 ? `category=${categoryId}` : ''}
 			&sortBy=${sortBy}&order=${order}`)
-			.then((res) => {
-				return res.json();
-			})
-			.then((arr) => {
-				setItems(arr);
+			.then(response => {
+				setItems(response.data);
 				setIsLoading(false);
-			});
+			})
+
 		window.scrollTo(0, 0);
 	}, [categoryId, sortType, currentPage]);
 
@@ -108,31 +123,19 @@ const Home = () => {
 	return (
 		<>
 			<div className="content__nav nav-content">
-				<Categories
-					value={categoryId}
-					onChangeCategory={onChangeCategory}
-
-				/>
-				<Sort
-
-				/>
+				<Categories value={categoryId} onChangeCategory={onChangeCategory} />
+				<Sort />
 			</div>
 
 			<div className="content__body">
 				<div className="content__title">Все пиццы</div>
 				{/* <NotFound></NotFound> */}
 				<div className="content__card">
-
-
-					{
-						isLoading
-							? skeletons
-							: pizzas
-					}
-
+					{isLoading ? skeletons : pizzas}
 				</div>
 				<Pagination
-					onChangePage={(number) => setCurrentPage(number)}
+					currentPage={currentPage}
+					onChangePage={onChangePage}
 				/>
 			</div>
 		</>

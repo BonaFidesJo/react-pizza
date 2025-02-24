@@ -1,13 +1,38 @@
 
 import React from "react";
 import { SearchContext } from "../Index.jsx";
+import debounce from "lodash.debounce";
+
 
 
 
 
 const Search = () => {
 
-	const { searchValue, setSearchValue } = React.useContext(SearchContext)
+	const [value, setValue] = React.useState('')
+
+	const { setSearchValue } = React.useContext(SearchContext)
+
+	const inputRef = React.useRef();
+
+	const onClickClear = () => {
+		setSearchValue('');
+		setValue('');
+		// document.querySelector('input').focus()
+		inputRef.current.focus();
+	}
+
+	const updateSearchValue = React.useCallback(
+		debounce((str) => {
+			setSearchValue(str)
+		}, 350),
+		[] //Зависимость
+	);
+
+	const onChangeInput = (event) => {
+		setValue(event.target.value)
+		updateSearchValue(event.target.value)
+	}
 
 	return (
 
@@ -16,17 +41,17 @@ const Search = () => {
 			<div className="search__body">
 				<img className="search__image" src="@img/header/search.svg" alt="Image" />
 				<input
+					ref={inputRef}
 					placeholder="Поиск ..."
 					type="text"
 					className="search__input"
-
-					value={searchValue}
-					onChange={(e) => setSearchValue(e.target.value)}
+					value={value}
+					onChange={onChangeInput}
 
 				/>
 				{
-					searchValue && (
-						<img onClick={() => setSearchValue('')} className="search__close" src="@img/header/close.svg" alt="Image" />
+					value && (
+						<img onClick={onClickClear} className="search__close" src="@img/header/close.svg" alt="Image" />
 					)
 				}
 

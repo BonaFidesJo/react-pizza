@@ -52,11 +52,11 @@ const root = document.querySelector("#root")
 
 
 ReactDOM.createRoot(root).render(
-	<React.StrictMode>
+	// <React.StrictMode>
 		<Router>
 			<Provider store={store}>
 				<App />
 			</Provider>
 		</Router>
-	</React.StrictMode>
+	// </React.StrictMode>
 );

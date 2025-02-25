@@ -33,13 +33,18 @@ const filterSlice = createSlice({
 		},
 		setCurrentPage(state, action) {
 			state.currentPage = action.payload;
+		},//И тут создаем новый метод длля ссылки
+		setFilters(state, action) {
+			state.currentPage = Number(action.payload.currentPage); //Вшивает текущуб страницу из пейлоада
+			state.sort = action.payload.sort;
+			state.categoryId = Number(action.payload.categoryId);
 		}
 	}
 });
 
 // Все методы можно вытащить тут из экшенс
 // Мы вытаскиваем из объекта свойства (setCategoryId). преобразуем в константу, которую потом экспортируем
-export const { setCategoryId, setSort, setCurrentPage } = filterSlice.actions;
+export const { setCategoryId, setSort, setCurrentPage, setFilters } = filterSlice.actions;
 
 // По умолчанию экспортрируем редюсер
 export default filterSlice.reducer;

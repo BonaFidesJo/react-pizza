@@ -2,9 +2,12 @@
 import React from "react";
 import axios from "axios";
 
+import qs from 'qs';
+
+import { useNavigate } from "react-router-dom";
 
 import { useSelector, useDispatch } from 'react-redux'
-import { setCategoryId, setCurrentPage} from './../redux/slices/filterSlice.js'
+import { setCategoryId, setCurrentPage, setFilters } from './../redux/slices/filterSlice.js'
 
 import Categories from "./../components/Categories.jsx";
 import Sort from "./../components/Sort.jsx";
@@ -13,28 +16,39 @@ import Skeleton from "./../components/skeleton.jsx";
 import Pagination from "../components/Pagination.jsx";
 import { SearchContext } from "../Index.jsx";
 
-
-
+import { list } from "./../components/Sort.jsx";
 
 // import pizza from "./assets/pizza.json"
 
 const Home = () => {
+	const fetchPizzas =(() => {
+		setIsLoading(true);
+		const order = sortType.includes('-') ? 'asc' : 'desc'
+		const sortBy = sortType.replace('-', '')
+		//fetch запрос к тестовому апи
+		// 	fetch(
+		axios.get(`https://67b2e560bc0165def8cf0958.mockapi.io/items?page=${currentPage}&limit=8&
+			${categoryId > 0 ? `category=${categoryId}` : ''}
+			&sortBy=${sortBy}&order=${order}`)
+			.then(response => {
+				setItems(response.data);
+				setIsLoading(false);
+			})
+
+		window.scrollTo(0, 0);
+})
+
+	const isMounted = React.useRef(false);
 	//Указываем категори ИД, и передаем useSelector. И уже внутри этого хука вшит useContext
 	//И с помощью этого хука, мы можем вытащить весь наш стейт(Стор), т.е. все наше хранилище
 	// State будет функция state => и далее говорим, что их этого стейта мы хотим вытищить что-то определенное.state.filter.categoryId)
-
-
 	const categoryId = useSelector((state) => state.filter.categoryId)
 	const sortType = useSelector((state) => state.filter.sort.sortProperty)
 	const currentPage = useSelector((state) => state.filter.currentPage)
 	// их можно объединить в один
 	// const { categoryId, sort } = useSelector((state) => state.filter)
 	// const sortType = sort.sortProperty
-
-
-
 	const dispatch = useDispatch()
-
 
 	const onChangeCategory = (id) => {
 		dispatch(setCategoryId(id));
@@ -47,14 +61,9 @@ const Home = () => {
 	const onChangePage = (number) => {
 		dispatch(setCurrentPage(number))
 	}
-
-
-
 	const { searchValue } = React.useContext(SearchContext)
-
 	//Массим с пиццами
 	let [items, setItems] = React.useState([]);
-
 	const [isLoading, setIsLoading] = React.useState(true);
 
 	//Избавились от этого свойства, чтобы доставать его из редакс тулкита
@@ -68,54 +77,71 @@ const Home = () => {
 	// 	sortProperty: 'rating'
 	// });
 
-	//fetch запрос к тестовому апи
-	React.useEffect(() => {
-		setIsLoading(true);
+	//Делаем ссылку уникальной
+	const navigate = useNavigate();
 
-		const order = sortType.includes('-') ? 'asc' : 'desc'
-		const sortBy = sortType.replace('-', '')
+	const isSearch = React.useRef(false);
 
-		// 	fetch(
-		// 		`https://67b2e560bc0165def8cf0958.mockapi.io/items?page=${currentPage}&limit=8&
-		// 		${categoryId > 0 ? `category=${categoryId}` : ''}
-		// 		&sortBy=${sortBy}&order=${order}`)
-		// 		.then((res) => {
-		// 			return res.json();
-		// 		})
-		// 		.then((arr) => {
-		// 			setItems(arr);
-		// 			setIsLoading(false);
-		// 		});
-		// 	window.scrollTo(0, 0);
-		// }, [categoryId, sortType, currentPage]);
 
-		axios.get(`https://67b2e560bc0165def8cf0958.mockapi.io/items?page=${currentPage}&limit=8&
-			${categoryId > 0 ? `category=${categoryId}` : ''}
-			&sortBy=${sortBy}&order=${order}`)
-			.then(response => {
-				setItems(response.data);
-				setIsLoading(false);
+	// До получения пицц мы будем првоерять есть ли в урл эти параметры. Чтобы вытащить параемтры модно 2 способамию В реакт роутер Домю гыу ыурс рамс. А мы будем использовать window.location.search
+
+	//Чтобы убрать вопросительный знак, который нельзя туда передавать дулаем substring(1)
+
+	//Делаем отдульную функцию чтобы она не валялась в юз эффекте
+	
+console.log(isMounted)
+
+React.useEffect(() => {
+	if (isMounted.current) {
+		const queryString = qs.stringify({
+			sortProperty: sortType,
+			categoryId,
+			currentPage
+		});
+		navigate(`?${queryString}`);
+	}
+	isMounted.current = true;
+}, [categoryId, sortType, currentPage]);
+
+
+	
+// если был первыц рендер, то проверяем урл и сохраняем в редукс.
+React.useEffect(() => {
+	if (window.location.search) {
+		const params = qs.parse(window.location.search.substring(1));
+		console.log(params) //Эти полученные параметры нужно передать в Редаксю Для этого идем в филтер слайс
+		const sort = list.find((obj) => obj.sortProperty === params.sortProperty)
+
+		dispatch(
+			setFilters({
+				...params,
+				sort,
 			})
+		);
+		isSearch.current = true;
+	}
+}, [])
 
-		window.scrollTo(0, 0);
-	}, [categoryId, sortType, currentPage]);
 
-	const pizzas = items
+	
+	
+	React.useEffect(() => {
+		if (!isSearch.current) {
+			fetchPizzas()
+		}
+		isSearch.current = false;
 
-		.filter(obj => {
-			if (obj.title.toLowerCase().includes(searchValue.toLowerCase())) {
-				return true;
-			}
+	}, [categoryId, sortType, searchValue, currentPage]);
 
-			return false;
-		})
 
-		.map((obj) =>
-		(
-			<Card
-				key={obj.id}
-				{...obj}
-			/>))
+	
+
+	const pizzas = items.filter(obj => {
+		if (obj.title.toLowerCase().includes(searchValue.toLowerCase())) {
+			return true;
+		} return false;
+	}).map((obj) =>
+		(<Card key={obj.id} {...obj} />))
 
 	const skeletons = [...new Array(8)].map((_, index) => <Skeleton key={index} />);
 
@@ -144,4 +170,17 @@ const Home = () => {
 
 export default Home;
 
-
+//fetch запрос к тестовому апи
+// 	fetch(
+// 		`https://67b2e560bc0165def8cf0958.mockapi.io/items?page=${currentPage}&limit=8&
+// 		${categoryId > 0 ? `category=${categoryId}` : ''}
+// 		&sortBy=${sortBy}&order=${order}`)
+// 		.then((res) => {
+// 			return res.json();
+// 		})
+// 		.then((arr) => {
+// 			setItems(arr);
+// 			setIsLoading(false);
+// 		});
+// 	window.scrollTo(0, 0);
+// }, [categoryId, sortType, currentPage]);

@@ -89,7 +89,7 @@ const Home = () => {
 
 	//Делаем отдульную функцию чтобы она не валялась в юз эффекте
 	
-console.log(isMounted)
+
 
 React.useEffect(() => {
 	if (isMounted.current) {
@@ -109,7 +109,7 @@ React.useEffect(() => {
 React.useEffect(() => {
 	if (window.location.search) {
 		const params = qs.parse(window.location.search.substring(1));
-		console.log(params) //Эти полученные параметры нужно передать в Редаксю Для этого идем в филтер слайс
+	//	console.log(params) //Эти полученные параметры нужно передать в Редаксю Для этого идем в филтер слайс
 		const sort = list.find((obj) => obj.sortProperty === params.sortProperty)
 
 		dispatch(

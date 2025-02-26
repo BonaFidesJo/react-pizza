@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from 'react-redux'
-import {setSort} from './../redux/slices/filterSlice.js'
+import { setSort } from './../redux/slices/filterSlice.js'
 
 
 export const list = [
@@ -15,7 +15,8 @@ export const list = [
 
 const Sort = () => {
 	const dispatch = useDispatch();
-	const sort = useSelector((state) => state.filter.sort)
+	const sort = useSelector((state) => state.filter.sort);
+	const sortRef = React.useRef();
 
 	const [openPopup, setOpenPopup] = React.useState(false);
 
@@ -23,11 +24,28 @@ const Sort = () => {
 		dispatch(setSort(obj));
 		setOpenPopup(false);
 
+
 	}
+
+	// Скрытие попапа при клике вне области
+	React.useEffect(() => {
+
+		const handleClickOutside = (event) => {
+			if (!event.composedPath().includes(sortRef.current)) {
+				setOpenPopup(false);
+				console.log('click outside')
+			}
+		}
+		document.body.addEventListener('click', handleClickOutside);
+
+		//Чтобы обработчик событий удалился перед удалением попапа со страницы, Unmount
+		return () => {document.body.removeEventListener('click', handleClickOutside);}
+
+	}, []);
 
 
 	return (
-		<div className="nav-content__sort sort">
+		<div ref={sortRef} className="nav-content__sort sort">
 			<div onClick={() => setOpenPopup(!openPopup)} className="sort__label">
 				<p> <img src="@img/sort.svg" alt="Image" /> Сортировка по:</p>
 				<span>{sort.name}</span>

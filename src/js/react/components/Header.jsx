@@ -8,7 +8,8 @@ import { useSelector } from "react-redux";
 
 const Header = () => {
 
-	const {items, totalPrice } = useSelector(state => state.cart)
+	const { items, totalPrice } = useSelector(state => state.cart)
+	const totalCount = items.reduce((sum, item) => sum + item.count, 0) // Берем из всех обхектов каунт, суммируем их
 
 	return (
 		<header className="header">
@@ -30,7 +31,7 @@ const Header = () => {
 							<div className="bar__price">{totalPrice} ₽</div>
 							<div className="bar__cart">
 								<img className="bar__cart_img" src="@img/header/cart.svg" alt="cart" />
-								<div className="bar__cart_count">{items.length}</div>
+								<div className="bar__cart_count">{totalCount}</div>
 							</div>
 						</div>
 					</Link>

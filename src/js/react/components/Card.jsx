@@ -10,7 +10,11 @@ const Card = ({ id, title, price, image, sizes, types }) => {
 	const dispatch = useDispatch();
 	const [activeType, setActiveType] = React.useState(0)
 	const [activeSize, setActiveSize] = React.useState(0)
+	const typeNames = ['тонкое', 'традиционное']
+	const cartItem = useSelector((state) => state.cart.items.find((obj) => obj.id === id))
 
+	//Делаем проверку на то, чтобы если в корзине нет ничего, то кол-во ноль. есди есть то отображается
+	const addedCount = cartItem ? cartItem.count : 0;
 	// const onClickType =(typeId) =>{
 	// 	setActiveType(typeId)
 	// }
@@ -22,19 +26,19 @@ const Card = ({ id, title, price, image, sizes, types }) => {
 			title,
 			price,
 			image,
-			type: activeType,
+			type: typeNames[activeType], //чтобы брал таймнеймс и называл в виде строчки
 			size: activeSize
 		};
 		//Вызвать диспатч и передать ему айтем
 		dispatch(addItems(item))
 	}
 
-	const [pizzaCount, setPizzaCount] = React.useState(0);
+
 
 	// const onClickAddButton = () => {
 	// 	setPizzaCount(pizzaCount + 1);
 	// }
-	const typeNames = ['тонкое', 'традиционное']
+
 
 	return (
 		<div className="card">
@@ -78,7 +82,10 @@ const Card = ({ id, title, price, image, sizes, types }) => {
 					</div>
 
 					<div className="button-card__text">Добавить</div>
-					<div className="button-card__count"><span>{pizzaCount}</span></div>
+					{
+						addedCount>0 && 	<div className="button-card__count"><span>{addedCount}</span></div>
+					}
+				
 
 				</button>
 			</div>

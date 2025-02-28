@@ -112,10 +112,10 @@
 	}
 
 	&__image {
-		width: 100%;
+		width: toRem(80);
+		height: toRem(80);
 		img{
-			width: toRem(80);
-			height: toRem(80);
+			width: 100%;
 		}
 	}
 
@@ -140,14 +140,27 @@
 	&__count {
 		display: flex;
 		align-items: center;
+		cursor: pointer;
 		// justify-content: center;
 		// text-align: center;
 		@include adaptiveValue("gap", 20, 10);
 		svg{
 			@include adaptiveValue("width", 32, 28);
+			@media(any-hover:hover){
+			&:hover{
+				path{fill:white;}
+				circle{fill:#ee4806;}
+					
+				}
+			}
+
+			}
+				
+					
+		
+	
 		}
 	
-	}
 
 	&__qty {
 		font-weight: 700;
@@ -157,6 +170,7 @@
 
 	&__price {
 		font-weight: 700;
+		width: toRem(80);
 		@include adaptiveValue("font-size", 22, 18);
 		letter-spacing: 0.01em;
 		align-self: center;

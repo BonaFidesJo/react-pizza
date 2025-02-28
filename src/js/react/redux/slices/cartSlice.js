@@ -12,13 +12,30 @@ const cartSlice = createSlice({
 	name: 'cart',
 	initialState,
 	reducers: {
+
 		addItems(state, action) {
-			state.items.push(action.payload);
-			//чтобы считалась сумма
+			const findItem = state.items.find(obj => obj.id === action.payload.id);
+
+			if (findItem) {
+				findItem.count++
+			} else {
+				state.items.push({
+					...action.payload, // если такого объекта еще нет в массиве, то берем этот объект и добавляем его. коунт - 1
+					count: 1,
+				});
+			}
 			state.totalPrice = state.items.reduce((sum, obj) => {
-				return obj.price + sum;
+				return (obj.price * obj.count) + sum; //Умножаем цену за единицу на кол-во и прибавляем к предыдущей сумме
 			}, 0)
 		},
+
+		minusItem(state,action){
+			const findItem = state.items.find(obj => obj.id === action.payload);
+			if (findItem){
+				findItem.count--;
+			}
+		},
+
 		removeItem(state, action) {
 			state.items = state.items.filter((obj) => obj.id !== action.payload);
 		},
@@ -28,7 +45,7 @@ const cartSlice = createSlice({
 	},
 });
 
-export const { addItems, removeItem, clearItem } = cartSlice.actions;
+export const { addItems, removeItem, minusItem, clearItem } = cartSlice.actions;
 
 // По умолчанию экспортрируем редюсер
 export default cartSlice.reducer;

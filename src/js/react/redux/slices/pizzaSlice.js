@@ -23,7 +23,7 @@ export const fetchPizzas = createAsyncThunk(
 		const { order, sortBy, currentPage, categoryId } = params;
 		const { data } = await axios
 			.get(
-				`https://67b2e560bc0165def8cf0958.mockapi.io/items?page=${currentPage}&limit=8&${categoryId > 0 ? `category=${categoryId}` : ''}&sortBy=${sortBy}&order=${order}`
+				`https://67b2e560bc0165def8cf0958.mockapi.io/items?page=${currentPage}&limit=8&${categoryId !== null ? `category=${categoryId}` : ''}&sortBy=${sortBy}&order=${order}`
 			);
 		return data;
 	}
@@ -32,7 +32,7 @@ export const fetchPizzas = createAsyncThunk(
 
 const initialState = {
 	items: [],
-	
+
 };
 
 
@@ -45,30 +45,32 @@ const pizzaSlice = createSlice({
 			state.items = action.payload;
 		}
 	},
-	extraReducers: builder => {
-		builder.addCase(fetchPizzas.fulfilled, (state, action) => {
-		  console.log(state)
-		})
-	 },
+	// extraReducers: builder => {
+	// 	builder.addCase(fetchPizzas.fulfilled, (state, action) => {
+	// 	  console.log(state)
+	// 	})
+	//  },
 
-	// extraReducers: (builder) => {
-	// 	builder
-	// 		// .addCase(fetchPizzas.pending, (state) => {
-	// 		//    state.status = "loading"
-	// 		//    state.items = []
-	// 		// })
-	// 		.addCase(fetchPizzas.fulfilled, (state, action) => {
-				
-	// 			state.items = action.payload
-		
+	extraReducers: (builder) => {
+		builder
+			.addCase(fetchPizzas.pending, (state) => {
+				console.log('Идет отправка')
+				state.status = "loading"
+				state.items = []
+			})
+			.addCase(fetchPizzas.fulfilled, (state, action) => {
 
-	// 		})
-	// 	// .addCase(fetchPizzas.rejected, (state) => {
-	// 	//    state.status = "error"
-	// 	//    state.items = []
-	// 	// })
-	// },
-	
+				state.items = action.payload
+				state.status = "success"
+
+			})
+			.addCase(fetchPizzas.rejected, (state) => {
+				console.log('Error')
+				state.status = "error"
+				state.items = []
+			})
+	},
+
 });
 
 export const { setItems } = pizzaSlice.actions;

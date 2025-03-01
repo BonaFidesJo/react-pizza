@@ -23,13 +23,31 @@ import { list } from "./../components/Sort.jsx";
 
 const Home = () => {
 
+	const isMounted = React.useRef(false);
+	//Указываем категори ИД, и передаем useSelector. И уже внутри этого хука вшит useContext
+	//И с помощью этого хука, мы можем вытащить весь наш стейт(Стор), т.е. все наше хранилище
+	// State будет функция state => и далее говорим, что их этого стейта мы хотим вытищить что-то определенное.state.filter.categoryId)
+	const categoryId = useSelector((state) => state.filter.categoryId)
+	const sortType = useSelector((state) => state.filter.sort.sortProperty)
+	const currentPage = useSelector((state) => state.filter.currentPage)
+	const items = useSelector((state) => state.pizza.items)
+	// их можно объединить в один
+	// const { categoryId, sort } = useSelector((state) => state.filter)
+	// const sortType = sort.sortProperty
+	const { searchValue } = React.useContext(SearchContext)
+	//Массим с пиццами
+
+	const dispatch = useDispatch()
+
+
+
 	// Асинхронная функуия
 	const getPizzas = async () => {
 
 		setIsLoading(true);
 		const order = sortType.includes('-') ? 'asc' : 'desc'
 		const sortBy = sortType.replace('-', '')
-		//Можем соркатить код при помощи асинк эвейт
+			//Можем соркатить код при помощи асинк эвейт
 		try {
 			console.log('555')
 			// const { data } = await axios //С помощью деструктуризации вытащиоли сразу дата, чтобы не вытаскивать ее из ответа
@@ -39,7 +57,7 @@ const Home = () => {
 			// // setItems(response.data); Вместо этого пишем диспатч, т.к. у нас в редаксе все
 			// // Т.к. с помощью деструктуризации из ответа сразу вытащили дата, то ее сюда в ответ и передаем
 			// dispatch(setItems(data)) Вместо этого пишем по другому, т.к. сэт айтемс убрали
-			dispatch(fetchPizzas({order,sortBy, currentPage, categoryId})) //Если раньше мы говорили, дай данные, а потом сохрани(диспатч). Теперь мы это делаем одной функцией
+			dispatch(fetchPizzas({order,sortBy, currentPage, categoryId})); //Если раньше мы говорили, дай данные, а потом сохрани(диспатч). Теперь мы это делаем одной функцией
 
 		} catch (error) {
 			console.log(error, 'Axios error');
@@ -55,18 +73,7 @@ const Home = () => {
 
 	}
 
-	const isMounted = React.useRef(false);
-	//Указываем категори ИД, и передаем useSelector. И уже внутри этого хука вшит useContext
-	//И с помощью этого хука, мы можем вытащить весь наш стейт(Стор), т.е. все наше хранилище
-	// State будет функция state => и далее говорим, что их этого стейта мы хотим вытищить что-то определенное.state.filter.categoryId)
-	const categoryId = useSelector((state) => state.filter.categoryId)
-	const sortType = useSelector((state) => state.filter.sort.sortProperty)
-	const currentPage = useSelector((state) => state.filter.currentPage)
-	const items = useSelector((state) => state.pizza.items)
-	// их можно объединить в один
-	// const { categoryId, sort } = useSelector((state) => state.filter)
-	// const sortType = sort.sortProperty
-	const dispatch = useDispatch()
+
 
 	const onChangeCategory = (id) => {
 		dispatch(setCategoryId(id));
@@ -79,8 +86,6 @@ const Home = () => {
 	const onChangePage = (number) => {
 		dispatch(setCurrentPage(number))
 	}
-	const { searchValue } = React.useContext(SearchContext)
-	//Массим с пиццами
 
 	const [isLoading, setIsLoading] = React.useState(true);
 
@@ -144,6 +149,7 @@ const Home = () => {
 
 
 	React.useEffect(() => {
+		
 		if (!isSearch.current) {
 			getPizzas()
 		}

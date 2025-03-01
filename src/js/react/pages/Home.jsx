@@ -18,6 +18,8 @@ import Pagination from "../components/Pagination.jsx";
 import { SearchContext } from "../Index.jsx";
 
 import { list } from "./../components/Sort.jsx";
+import CartEmpty from "../components/CartEmpty.jsx";
+import NotFoundBlock from "../components/NotFoundBlock.jsx";
 
 // import pizza from "./assets/pizza.json"
 
@@ -30,7 +32,7 @@ const Home = () => {
 	const categoryId = useSelector((state) => state.filter.categoryId)
 	const sortType = useSelector((state) => state.filter.sort.sortProperty)
 	const currentPage = useSelector((state) => state.filter.currentPage)
-	const items = useSelector((state) => state.pizza.items)
+	const { items, status } = useSelector((state) => state.pizza)
 	// их можно объединить в один
 	// const { categoryId, sort } = useSelector((state) => state.filter)
 	// const sortType = sort.sortProperty
@@ -44,27 +46,22 @@ const Home = () => {
 	// Асинхронная функуия
 	const getPizzas = async () => {
 
-		setIsLoading(true);
+
 		const order = sortType.includes('-') ? 'asc' : 'desc'
 		const sortBy = sortType.replace('-', '')
-			//Можем соркатить код при помощи асинк эвейт
-		try {
-			console.log('555')
-			// const { data } = await axios //С помощью деструктуризации вытащиоли сразу дата, чтобы не вытаскивать ее из ответа
-			// 	.get(
-			// 		`https://67b2e560bc0165def8cf0958.mockapi.io/items?page=${currentPage}&limit=8&${categoryId > 0 ? `category=${categoryId}` : ''}&sortBy=${sortBy}&order=${order}`
-			// 	);
-			// // setItems(response.data); Вместо этого пишем диспатч, т.к. у нас в редаксе все
-			// // Т.к. с помощью деструктуризации из ответа сразу вытащили дата, то ее сюда в ответ и передаем
-			// dispatch(setItems(data)) Вместо этого пишем по другому, т.к. сэт айтемс убрали
-			dispatch(fetchPizzas({order,sortBy, currentPage, categoryId})); //Если раньше мы говорили, дай данные, а потом сохрани(диспатч). Теперь мы это делаем одной функцией
+		//Можем соркатить код при помощи асинк эвейт
 
-		} catch (error) {
-			console.log(error, 'Axios error');
-			alert('Ошибка при получении пицц')
-		} finally {
-			setIsLoading(false);
-		}
+		// const { data } = await axios //С помощью деструктуризации вытащиоли сразу дата, чтобы не вытаскивать ее из ответа
+		// 	.get(
+		// 		`https://67b2e560bc0165def8cf0958.mockapi.io/items?page=${currentPage}&limit=8&${categoryId > 0 ? `category=${categoryId}` : ''}&sortBy=${sortBy}&order=${order}`
+		// 	);
+		// // setItems(response.data); Вместо этого пишем диспатч, т.к. у нас в редаксе все
+		// // Т.к. с помощью деструктуризации из ответа сразу вытащили дата, то ее сюда в ответ и передаем
+		// dispatch(setItems(data)) Вместо этого пишем по другому, т.к. сэт айтемс убрали
+
+		dispatch(fetchPizzas({ order, sortBy, currentPage, categoryId })); //Если раньше мы говорили, дай данные, а потом сохрани(диспатч). Теперь мы это делаем одной функцией
+
+
 
 
 
@@ -87,7 +84,7 @@ const Home = () => {
 		dispatch(setCurrentPage(number))
 	}
 
-	const [isLoading, setIsLoading] = React.useState(true);
+	// const [isLoading, setIsLoading] = React.useState(true);
 
 	//Избавились от этого свойства, чтобы доставать его из редакс тулкита
 	// const [categoryId, setCategoryId] = React.useState(0);
@@ -149,7 +146,7 @@ const Home = () => {
 
 
 	React.useEffect(() => {
-		
+
 		if (!isSearch.current) {
 			getPizzas()
 		}
@@ -179,10 +176,14 @@ const Home = () => {
 
 			<div className="content__body">
 				<div className="content__title">Все пиццы</div>
-				{/* <NotFound></NotFound> */}
-				<div className="content__card">
-					{isLoading ? skeletons : pizzas}
-				</div>
+				{
+					status === "error" ? (<NotFoundBlock />) : (<div className="content__card">
+						{status === 'loading' ? skeletons : pizzas}
+					</div>)
+				}
+
+
+
 				<Pagination
 					currentPage={currentPage}
 					onChangePage={onChangePage}

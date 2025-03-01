@@ -9,11 +9,11 @@ import { clearItem } from "../redux/slices/cartSlice.js";
 
 
 const Cart = () => {
-
+	const { items, totalPrice } = useSelector(selectCart);
 	const dispatch = useDispatch();
 
-	const { items, totalPrice } = useSelector(state => state.cart)
-	const totalCount = items.reduce((sum, item) => sum + item.count, 0)
+	
+	const totalCount = items.reduce((sum, item) => sum + item.count, 0);
 
 	const onClickclear = () => {
 		if (window.confirm('Очистить корзину?')) {

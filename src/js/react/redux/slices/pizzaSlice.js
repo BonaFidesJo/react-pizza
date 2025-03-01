@@ -3,20 +3,6 @@ import axios from "axios"; //Импортируем аксос, т.к. мы де
 
 
 //Импортировали функцию, которая позволит сделать асинхронный экшен
-// export const fetchPizzas = createAsyncThunk(
-// 	'pizza/fetchPizzasStatus', //Дай мне префикс, данные и мб доп опции
-// 	async (params) => { //Хотим сделать асинхронную ф-ю и переносим сюда логику запроса
-// 		const { order,
-// 			sortBy,
-// 			currentPage,
-// 			categoryId } = params;
-// 		const { data } = await axios
-// 			.get(
-// 				`https://67b2e560bc0165def8cf0958.mockapi.io/items?page=${currentPage}&limit=8&${categoryId > 0 ? `category=${categoryId}` : ''}&sortBy=${sortBy}&order=${order}`
-// 			);
-// 		return data;
-// 	},
-// )
 
 export const fetchPizzas = createAsyncThunk(
 	'pizza/fetchPizzasStatus', async (params) => {

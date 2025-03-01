@@ -3,12 +3,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Search from "./Search.jsx";
 import { useSelector } from "react-redux";
+import { selectCart } from "../redux/slices/cartSlice.js";
 
 
 
 const Header = () => {
 
-	const { items, totalPrice } = useSelector(state => state.cart)
+	const { items, totalPrice } = useSelector(selectCart);
 	const totalCount = items.reduce((sum, item) => sum + item.count, 0) // Берем из всех обхектов каунт, суммируем их
 
 	return (

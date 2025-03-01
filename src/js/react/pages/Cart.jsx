@@ -4,22 +4,27 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import CartItem from "./../components/CartItem.jsx";
+import CartEmpty from "../components/CartEmpty.jsx";
 import { clearItem } from "../redux/slices/cartSlice.js";
 
 
 const Cart = () => {
 
 	const dispatch = useDispatch();
-	const { totalPrice, items } = useSelector((state) => state.cart.items)
 
+	const { items, totalPrice } = useSelector(state => state.cart)
 	const totalCount = items.reduce((sum, item) => sum + item.count, 0)
 
 	const onClickclear = () => {
 		if (window.confirm('Очистить корзину?')) {
 			dispatch(clearItem());
 		}
-
 	};
+
+	//Условный рендер,( также как и тернарный оператор)
+	if (!totalPrice) {
+		return (<CartEmpty />)
+	}
 
 	return (
 		<div className="cart">
@@ -40,6 +45,7 @@ const Cart = () => {
 					{
 						items.map(item => <CartItem key={item.id} {...item} />)
 					}
+
 
 
 				</ul>

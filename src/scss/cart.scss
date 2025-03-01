@@ -138,6 +138,7 @@
 	}
 
 	&__count {
+		user-select:none;
 		display: flex;
 		align-items: center;
 		cursor: pointer;
@@ -163,12 +164,14 @@
 	
 
 	&__qty {
+		user-select:none;
 		font-weight: 700;
 		@include adaptiveValue("font-size", 22, 18);
 		letter-spacing: 0.01em;
 	}
 
 	&__price {
+		user-select:none;
 		font-weight: 700;
 		width: toRem(80);
 		@include adaptiveValue("font-size", 22, 18);
@@ -258,5 +261,63 @@
 		}
 		}
 		
+	}
+}
+
+
+.empty-cart {
+
+	&__body {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+
+	}
+
+	&__title {
+		font-weight: 700;
+		@include adaptiveValue("font-size", 32,20);
+		letter-spacing: 0.01em;
+		@include adaptiveValue("margin-bottom", 20, 10);
+
+	}
+
+	&__text {
+		font-weight: 400;
+		@include adaptiveValue("font-size", 18, 16);
+		line-height: 145%;
+		letter-spacing: 0.01em;
+		color: #777;
+		@include adaptiveValue("margin-bottom", 40, 10);
+	}
+
+	&__image {
+		@include adaptiveValue("width",300 ,200 );
+		@include adaptiveValue("margin-bottom", 70, 30);
+
+		img{
+			width: 100%;
+		}
+	}
+	&__button{
+		background-color: black;
+		border-radius: toRem(30);
+		padding: toRem(20) toRem(30);
+		@include adaptiveValue("margin-bottom", 70, 30);
+
+		span{
+			font-weight: 700;
+			@include adaptiveValue("font-size", 16, 14);
+			letter-spacing: 0.01em;
+			text-align: center;
+			color: #fff;
+		}
+		@media(any-hover:hover){
+		&:hover{
+			background-color: rgb(58, 58, 58);
+		}
+		}
+
 	}
 }

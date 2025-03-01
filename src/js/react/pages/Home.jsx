@@ -1,6 +1,5 @@
 
 import React from "react";
-import axios from "axios";
 
 import qs from 'qs';
 
@@ -8,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 
 import { useSelector, useDispatch } from 'react-redux'
 import { setCategoryId, setCurrentPage, setFilters } from './../redux/slices/filterSlice.js'
+// import { setItems, fetchPizzas } from './../redux/slices/pizzaSlice.js' // Можем уже не писать сэт айтемс.убираем его
+import { fetchPizzas } from './../redux/slices/pizzaSlice.js'
 
 import Categories from "./../components/Categories.jsx";
 import Sort from "./../components/Sort.jsx";
@@ -21,22 +22,38 @@ import { list } from "./../components/Sort.jsx";
 // import pizza from "./assets/pizza.json"
 
 const Home = () => {
-	const fetchPizzas =(() => {
+
+	// Асинхронная функуия
+	const getPizzas = async () => {
+
 		setIsLoading(true);
 		const order = sortType.includes('-') ? 'asc' : 'desc'
 		const sortBy = sortType.replace('-', '')
-		//fetch запрос к тестовому апи
-		// 	fetch(
-		axios.get(`https://67b2e560bc0165def8cf0958.mockapi.io/items?page=${currentPage}&limit=8&
-			${categoryId > 0 ? `category=${categoryId}` : ''}
-			&sortBy=${sortBy}&order=${order}`)
-			.then(response => {
-				setItems(response.data);
-				setIsLoading(false);
-			})
+		//Можем соркатить код при помощи асинк эвейт
+		try {
+			console.log('555')
+			// const { data } = await axios //С помощью деструктуризации вытащиоли сразу дата, чтобы не вытаскивать ее из ответа
+			// 	.get(
+			// 		`https://67b2e560bc0165def8cf0958.mockapi.io/items?page=${currentPage}&limit=8&${categoryId > 0 ? `category=${categoryId}` : ''}&sortBy=${sortBy}&order=${order}`
+			// 	);
+			// // setItems(response.data); Вместо этого пишем диспатч, т.к. у нас в редаксе все
+			// // Т.к. с помощью деструктуризации из ответа сразу вытащили дата, то ее сюда в ответ и передаем
+			// dispatch(setItems(data)) Вместо этого пишем по другому, т.к. сэт айтемс убрали
+			dispatch(fetchPizzas({order,sortBy, currentPage, categoryId})) //Если раньше мы говорили, дай данные, а потом сохрани(диспатч). Теперь мы это делаем одной функцией
+
+		} catch (error) {
+			console.log(error, 'Axios error');
+			alert('Ошибка при получении пицц')
+		} finally {
+			setIsLoading(false);
+		}
+
+
 
 		window.scrollTo(0, 0);
-})
+
+
+	}
 
 	const isMounted = React.useRef(false);
 	//Указываем категори ИД, и передаем useSelector. И уже внутри этого хука вшит useContext
@@ -45,6 +62,7 @@ const Home = () => {
 	const categoryId = useSelector((state) => state.filter.categoryId)
 	const sortType = useSelector((state) => state.filter.sort.sortProperty)
 	const currentPage = useSelector((state) => state.filter.currentPage)
+	const items = useSelector((state) => state.pizza.items)
 	// их можно объединить в один
 	// const { categoryId, sort } = useSelector((state) => state.filter)
 	// const sortType = sort.sortProperty
@@ -63,7 +81,7 @@ const Home = () => {
 	}
 	const { searchValue } = React.useContext(SearchContext)
 	//Массим с пиццами
-	let [items, setItems] = React.useState([]);
+
 	const [isLoading, setIsLoading] = React.useState(true);
 
 	//Избавились от этого свойства, чтобы доставать его из редакс тулкита
@@ -88,53 +106,53 @@ const Home = () => {
 	//Чтобы убрать вопросительный знак, который нельзя туда передавать дулаем substring(1)
 
 	//Делаем отдульную функцию чтобы она не валялась в юз эффекте
-	
 
 
-React.useEffect(() => {
-	if (isMounted.current) {
-		const queryString = qs.stringify({
-			sortProperty: sortType,
-			categoryId,
-			currentPage
-		});
-		navigate(`?${queryString}`);
-	}
-	isMounted.current = true;
-}, [categoryId, sortType, currentPage]);
+
+	React.useEffect(() => {
+		if (isMounted.current) {
+			const queryString = qs.stringify({
+				sortProperty: sortType,
+				categoryId,
+				currentPage
+			});
+			navigate(`?${queryString}`);
+		}
+		isMounted.current = true;
+	}, [categoryId, sortType, currentPage]);
 
 
-	
-// если был первыц рендер, то проверяем урл и сохраняем в редукс.
-React.useEffect(() => {
-	if (window.location.search) {
-		const params = qs.parse(window.location.search.substring(1));
-	//	console.log(params) //Эти полученные параметры нужно передать в Редаксю Для этого идем в филтер слайс
-		const sort = list.find((obj) => obj.sortProperty === params.sortProperty)
 
-		dispatch(
-			setFilters({
-				...params,
-				sort,
-			})
-		);
-		isSearch.current = true;
-	}
-}, [])
+	// если был первыц рендер, то проверяем урл и сохраняем в редукс.
+	React.useEffect(() => {
+		if (window.location.search) {
+			const params = qs.parse(window.location.search.substring(1));
+			//	console.log(params) //Эти полученные параметры нужно передать в Редаксю Для этого идем в филтер слайс
+			const sort = list.find((obj) => obj.sortProperty === params.sortProperty)
+
+			dispatch(
+				setFilters({
+					...params,
+					sort,
+				})
+			);
+			isSearch.current = true;
+		}
+	}, [])
 
 
-	
-	
+
+
 	React.useEffect(() => {
 		if (!isSearch.current) {
-			fetchPizzas()
+			getPizzas()
 		}
 		isSearch.current = false;
 
 	}, [categoryId, sortType, searchValue, currentPage]);
 
 
-	
+
 
 	const pizzas = items.filter(obj => {
 		if (obj.title.toLowerCase().includes(searchValue.toLowerCase())) {
@@ -184,3 +202,20 @@ export default Home;
 // 		});
 // 	window.scrollTo(0, 0);
 // }, [categoryId, sortType, currentPage]);
+
+
+
+//fetch запрос к тестовому апи
+// 	fetch(
+//Хотим долждаться выполнения запроса. и только после делать то, что после (window scroll)
+// await axios.get(`https://67b2e560bc0165def8cf0958.mockapi.io/items?page=${currentPage}&limit=8&
+// 	${categoryId > 0 ? `category=${categoryId}` : ''}
+// 	&sortBy=${sortBy}&order=${order}`)
+// 	.then(response => {
+// 		setItems(response.data);
+// 		setIsLoading(false);
+// 	})
+// 	.catch(err => {
+// 		console.log(err, 'Axios error');
+// 		setIsLoading(false); //Говорим, что загрузку при обнаружении ошибки нужно завершить
+// 	})

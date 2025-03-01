@@ -27,7 +27,7 @@ const Card = ({ id, title, price, image, sizes, types }) => {
 			price,
 			image,
 			type: typeNames[activeType], //чтобы брал таймнеймс и называл в виде строчки
-			size: activeSize
+			size: sizes[activeSize],
 		};
 		//Вызвать диспатч и передать ему айтем
 		dispatch(addItems(item))
@@ -83,9 +83,9 @@ const Card = ({ id, title, price, image, sizes, types }) => {
 
 					<div className="button-card__text">Добавить</div>
 					{
-						addedCount>0 && 	<div className="button-card__count"><span>{addedCount}</span></div>
+						addedCount > 0 && <div className="button-card__count"><span>{addedCount}</span></div>
 					}
-				
+
 
 				</button>
 			</div>

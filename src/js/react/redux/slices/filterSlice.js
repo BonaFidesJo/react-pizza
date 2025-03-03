@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
+	searchValue: '',
 	categoryId: 0,
 	currentPage: 1,
 	sort: {
@@ -31,6 +32,9 @@ const filterSlice = createSlice({
 		setSort(state, action) {
 			state.sort = action.payload;
 		},
+		setSearchValue(state, action) {
+			state.searchValue = action.payload;
+		},
 		setCurrentPage(state, action) {
 			state.currentPage = action.payload;
 		},//И тут создаем новый метод длля ссылки
@@ -44,7 +48,7 @@ const filterSlice = createSlice({
 
 // Все методы можно вытащить тут из экшенс
 // Мы вытаскиваем из объекта свойства (setCategoryId). преобразуем в константу, которую потом экспортируем
-export const { setCategoryId, setSort, setCurrentPage, setFilters } = filterSlice.actions;
+export const { setCategoryId, setSort, setCurrentPage, setFilters,setSearchValue  } = filterSlice.actions;
 
 // По умолчанию экспортрируем редюсер
 export default filterSlice.reducer;

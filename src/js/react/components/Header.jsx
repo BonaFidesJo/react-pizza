@@ -9,7 +9,12 @@ import { selectCart } from "../redux/slices/cartSlice.js";
 
 const Header = () => {
 
+	const pathname = window.location.pathname;
+
+	console.log(pathname, window.location)
+
 	const { items, totalPrice } = useSelector(selectCart);
+	// const { items, totalPrice } = useSelector((state) => state.cart);
 	const totalCount = items.reduce((sum, item) => sum + item.count, 0) // Берем из всех обхектов каунт, суммируем их
 
 	return (
@@ -26,16 +31,19 @@ const Header = () => {
 							</div>
 						</div>
 					</Link>
+					{pathname !== '/cart' && (
+						<Link to="/cart">
+							<button className="header__bar bar">
+								<div className="bar__price">{totalPrice} ₽</div>
+								<div className="bar__cart">
+									<img className="bar__cart_img" src="@img/header/cart.svg" alt="cart" />
+									<div className="bar__cart_count">{totalCount}</div>
+								</div>
+							</button>
+						</Link>
+					)
 
-					<Link to="/cart">
-						<div className="header__bar bar">
-							<div className="bar__price">{totalPrice} ₽</div>
-							<div className="bar__cart">
-								<img className="bar__cart_img" src="@img/header/cart.svg" alt="cart" />
-								<div className="bar__cart_count">{totalCount}</div>
-							</div>
-						</div>
-					</Link>
+					}
 				</div>
 				<Search />
 			</div>

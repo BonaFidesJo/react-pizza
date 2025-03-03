@@ -5,11 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 
 import CartItem from "./../components/CartItem.jsx";
 import CartEmpty from "../components/CartEmpty.jsx";
-import { clearItem } from "../redux/slices/cartSlice.js";
+import { clearItem,selectCart } from "../redux/slices/cartSlice.js";
 
 
 const Cart = () => {
 	const { items, totalPrice } = useSelector(selectCart);
+	// const { items, totalPrice } = useSelector((state) => state.cart);
 	const dispatch = useDispatch();
 
 	

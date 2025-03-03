@@ -13,19 +13,19 @@ import NotFound from "./pages/NotFound.jsx";
 
 import { store } from "./redux/store.js";
 
-export const SearchContext = React.createContext();
+// export const SearchContext = React.createContext();
 
 
 function App() {
 
-	const [searchValue, setSearchValue] = React.useState('');
+	// const [searchValue, setSearchValue] = React.useState('');
 
 	return (
 
 		<main className="page">
 
 
-			<SearchContext.Provider value={{ searchValue, setSearchValue }}>
+			{/* <SearchContext.Provider value={{ searchValue, setSearchValue }}> */}
 				<Header />
 				<div className="content">
 					<div className="content__container">
@@ -38,7 +38,7 @@ function App() {
 
 					</div>
 				</div>
-			</SearchContext.Provider>
+			{/* </SearchContext.Provider> */}
 		</main>
 
 

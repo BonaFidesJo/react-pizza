@@ -6,7 +6,7 @@ import qs from 'qs';
 import { useNavigate } from "react-router-dom";
 
 import { useSelector, useDispatch } from 'react-redux'
-import { setCategoryId, setCurrentPage, setFilters } from './../redux/slices/filterSlice.js'
+import { setCategoryId, setCurrentPage, setFilters, setSearchcValue } from './../redux/slices/filterSlice.js'
 // import { setItems, fetchPizzas } from './../redux/slices/pizzaSlice.js' // Можем уже не писать сэт айтемс.убираем его
 import { fetchPizzas } from './../redux/slices/pizzaSlice.js'
 
@@ -32,11 +32,12 @@ const Home = () => {
 	const categoryId = useSelector((state) => state.filter.categoryId)
 	const sortType = useSelector((state) => state.filter.sort.sortProperty)
 	const currentPage = useSelector((state) => state.filter.currentPage)
+	const searchValue = useSelector((state) => state.filter.searchValue)
 	const { items, status } = useSelector((state) => state.pizza)
 	// их можно объединить в один
 	// const { categoryId, sort } = useSelector((state) => state.filter)
 	// const sortType = sort.sortProperty
-	const { searchValue } = React.useContext(SearchContext)
+	// const { searchValue } = React.useContext(SearchContext)
 	//Массим с пиццами
 
 	const dispatch = useDispatch()
@@ -61,13 +62,7 @@ const Home = () => {
 
 		dispatch(fetchPizzas({ order, sortBy, currentPage, categoryId })); //Если раньше мы говорили, дай данные, а потом сохрани(диспатч). Теперь мы это делаем одной функцией
 
-
-
-
-
 		window.scrollTo(0, 0);
-
-
 	}
 
 

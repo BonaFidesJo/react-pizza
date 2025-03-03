@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Search from "./Search.jsx";
 import { useSelector } from "react-redux";
 import { selectCart } from "../redux/slices/cartSlice.js";
@@ -9,9 +9,10 @@ import { selectCart } from "../redux/slices/cartSlice.js";
 
 const Header = () => {
 
-	const pathname = window.location.pathname;
-
-	console.log(pathname, window.location)
+	// const pathname = window.location.pathname;
+	// console.log(pathname, window.location) По факту не работает, т.к. не происходит перерисовки
+	const location = useLocation(); //В этом случае срабатфывает перерисовка
+	console.log(location)
 
 	const { items, totalPrice } = useSelector(selectCart);
 	// const { items, totalPrice } = useSelector((state) => state.cart);
@@ -31,7 +32,7 @@ const Header = () => {
 							</div>
 						</div>
 					</Link>
-					{pathname !== '/cart' && (
+					{location.pathname !== '/cart' && (
 						<Link to="/cart">
 							<button className="header__bar bar">
 								<div className="bar__price">{totalPrice} ₽</div>
@@ -45,7 +46,8 @@ const Header = () => {
 
 					}
 				</div>
-				<Search />
+				{location.pathname !== '/cart' && <Search />}
+
 			</div>
 		</header>
 	)

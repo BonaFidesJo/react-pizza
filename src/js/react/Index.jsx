@@ -10,10 +10,13 @@ import Home from "./pages/Home.jsx";
 import Cart from "./pages/Cart.jsx";
 
 import NotFound from "./pages/NotFound.jsx";
+// import FullPizza from "./pages/FullPizza.jsx";
 
 import { store } from "./redux/store.js";
+import MainLayout from "./layouts/MainLayout.jsx";
 
 // export const SearchContext = React.createContext();
+
 
 
 function App() {
@@ -22,26 +25,18 @@ function App() {
 
 	return (
 
-		<main className="page">
+		// <SearchContext.Provider value={{ searchValue, setSearchValue }}> *
+
+		< Routes >
+			<Route path="/" element={<MainLayout />}>
+				<Route path="" element={<Home />} exact />
+				<Route path="cart" element={<Cart />} />
+				<Route path="*" element={<NotFound />} />
+			</Route>
+		</ Routes >
 
 
-			{/* <SearchContext.Provider value={{ searchValue, setSearchValue }}> */}
-				<Header />
-				<div className="content">
-					<div className="content__container">
-
-						<Routes>
-							<Route path="/" element={<Home />} exact />
-							<Route path="/cart" element={<Cart />} />
-							<Route path="*" element={<NotFound />} />
-						</ Routes >
-
-					</div>
-				</div>
-			{/* </SearchContext.Provider> */}
-		</main>
-
-
+		//</SearchContext.Provider> 
 	);
 }
 
@@ -53,10 +48,10 @@ const root = document.querySelector("#root")
 
 ReactDOM.createRoot(root).render(
 	// <React.StrictMode>
-		<Router>
-			<Provider store={store}>
-				<App />
-			</Provider>
-		</Router>
+	<Router>
+		<Provider store={store}>
+			<App />
+		</Provider>
+	</Router>
 	// </React.StrictMode>
 );

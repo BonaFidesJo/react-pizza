@@ -30,8 +30,16 @@ if (!pugPages.length) {
 }
 const paths = {
 	src: path.resolve(srcFolder),
-	build: path.resolve(builFolder)
+	build: path.resolve(builFolder),
+
+	// Вставлено для tsx
+
 }
+
+
+
+
+
 const config = {
 	mode: "development",
 	devtool: 'inline-source-map',
@@ -120,7 +128,7 @@ const config = {
 					}
 				]
 			}, {
-				test: /\.(jsx)$/,
+				test: /\.(jsx|tsx)$/,
 				exclude: /node_modules/,
 				use: [
 					{
@@ -181,5 +189,6 @@ const config = {
 			"@img": `${paths.src}/img`
 		},
 	},
+
 }
 export default config;

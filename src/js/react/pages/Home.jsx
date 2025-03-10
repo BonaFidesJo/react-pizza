@@ -15,7 +15,7 @@ import Sort from "./../components/Sort.jsx";
 import Card from "./../components/Card.jsx"
 import Skeleton from "./../components/skeleton.jsx";
 import Pagination from "../components/Pagination.jsx";
-import { SearchContext } from "../Index.jsx";
+
 
 import { list } from "./../components/Sort.jsx";
 import CartEmpty from "../components/CartEmpty.jsx";

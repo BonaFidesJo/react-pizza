@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import { Provider } from 'react-redux';
 
@@ -25,7 +25,7 @@ function App() {
 
 	return (
 
-		// <SearchContext.Provider value={{ searchValue, setSearchValue }}> *
+		// <SearchContext.Provider value={{ searchValue, setSearchValue }}> 
 
 		< Routes >
 			<Route path="/" element={<MainLayout />}>

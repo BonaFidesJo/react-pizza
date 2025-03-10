@@ -35,6 +35,16 @@ const paths = {
 	src: path.resolve(srcFolder),
 	build: path.resolve(builFolder)
 }
+
+// module.exports = {
+// 	output: {
+// 		filename: 'my-first-webpack.bundle.js',
+// 	},
+// 	module: {
+// 		rules: [{ test: /\.txt$/, use: 'raw-loader' }],
+// 	},
+// };
+
 const config = {
 	mode: "production",
 	cache: {
@@ -111,7 +121,7 @@ const config = {
 					name: '[path][name].[ext]',
 				}
 			}, {
-				test: /\.(jsx)$/,
+				test: /\.(jsx|tsx)$/,
 				exclude: /node_modules/,
 				use: [
 					{
@@ -158,3 +168,6 @@ const config = {
 	},
 }
 export default config;
+
+
+

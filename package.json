@@ -25,8 +25,8 @@
 		"@babel/preset-react": "latest",
 		"@googlemaps/js-api-loader": "^1.16.8",
 		"@types/isotope-layout": "^3.0.9",
-		"@types/react": "^18.0.28",
-		"@types/react-dom": "^18.0.11",
+		"@types/react": "^18.3.18",
+		"@types/react-dom": "^18.3.5",
 		"autoprefixer": "^10.4.19",
 		"babel-loader": "latest",
 		"copy-webpack-plugin": "latest",
@@ -91,6 +91,8 @@
 	"dependencies": {
 		"@redux-devtools/extension": "^3.3.0",
 		"@reduxjs/toolkit": "^2.5.1",
+		"@types/jest": "^29.5.14",
+		"@types/node": "^22.13.9",
 		"axios": "^1.7.9",
 		"gulp-cheerio": "^1.0.0",
 		"isotope-layout": "^3.0.6",
@@ -102,6 +104,7 @@
 		"react-paginate": "^8.3.0",
 		"react-redux": "^9.2.0",
 		"react-router-dom": "^6.29.0",
-		"simplebar": "latest"
+		"simplebar": "latest",
+		"typescript": "^5.8.2"
 	}
 }

@@ -126,7 +126,7 @@ const config = {
 					name: '[path][name].[ext]',
 				}
 			}, {
-				test: /\.(jsx)$/,
+				test: /\.(jsx|tsx)$/,
 				exclude: /node_modules/,
 				use: [
 					{

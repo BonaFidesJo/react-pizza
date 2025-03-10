@@ -5,7 +5,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import { Provider } from 'react-redux';
 
-import Header from "./components/Header.jsx"
 import Home from "./pages/Home.jsx";
 import Cart from "./pages/Cart.jsx";
 
@@ -29,7 +28,7 @@ function App() {
 
 		< Routes >
 			<Route path="/" element={<MainLayout />}>
-				<Route path="" element={<Home />} exact />
+				<Route path="" element={<Home />} /> //+exact
 				<Route path="cart" element={<Cart />} />
 				<Route path="*" element={<NotFound />} />
 			</Route>
@@ -41,17 +40,20 @@ function App() {
 }
 
 
+
 const root = document.querySelector("#root")
 	? document.querySelector("#root")
 	: document.querySelector(".wrapper");
 
+if (root) {
+	ReactDOM.createRoot(root).render(
+		// <React.StrictMode>æ
+		<Router>
+			<Provider store={store}>
+				<App />
+			</Provider>
+		</Router>
+		// </React.StrictMode>
+	);
+}
 
-ReactDOM.createRoot(root).render(
-	// <React.StrictMode>
-	<Router>
-		<Provider store={store}>
-			<App />
-		</Provider>
-	</Router>
-	// </React.StrictMode>
-);

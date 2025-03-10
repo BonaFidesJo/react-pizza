@@ -18,7 +18,6 @@ import Pagination from "../components/Pagination.jsx";
 
 
 import { list } from "./../components/Sort.jsx";
-import CartEmpty from "../components/CartEmpty.jsx";
 import NotFoundBlock from "../components/NotFoundBlock.jsx";
 
 // import pizza from "./assets/pizza.json"
